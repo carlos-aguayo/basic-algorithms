@@ -1,0 +1,54 @@
+package com.dreamskiale.basic_algorithms.sort;
+
+public class MergeSort {
+
+  public static void main(String[] args) {
+    int[] a = new int[]{2,4,76,2,3,8,9,4,3,66,55,44,33};
+    new MergeSort().mergesort(a);
+    for (int n : a) {
+      System.out.print(n + " ");
+    }
+  }
+  
+  public void mergesort(int[] a) {
+    mergesort(a, 0, a.length-1);
+  }
+  
+  private void mergesort(int[] a, int p, int r) {
+    if (p < r) {
+      int q = (p + r) / 2;
+      mergesort(a, p, q);
+      mergesort(a, q + 1, r);
+      merge(a, p, q, r);
+    }
+  }
+  
+  public void merge(int[] a, int p, int q, int r) {
+    int n1 = q - p + 1;
+    int n2 = r - q;
+    
+    int[] left = new int[n1+1];
+    int[] right = new int[n2+1];
+    
+    for (int i = 0; i < n1; i++) {
+      left[i] = a[i + p];
+    }
+    for (int j = 0; j < n2; j++) {
+      right[j] = a[j + q + 1];
+    }
+    
+    left[n1] = Integer.MAX_VALUE;
+    right[n2] = Integer.MAX_VALUE;
+    
+    for (int k = p, i = 0, j = 0; k <= r; k++) {
+      if (left[i] <= right[j]) {
+        a[k] = left[i];
+        i++;
+      } else {
+        a[k] = right[j];
+        j++;
+      }
+    }
+  }
+
+}
