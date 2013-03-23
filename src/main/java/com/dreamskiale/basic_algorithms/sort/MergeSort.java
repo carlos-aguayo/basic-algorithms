@@ -1,16 +1,9 @@
 package com.dreamskiale.basic_algorithms.sort;
 
-public class MergeSort {
+public class MergeSort implements Sort {
 
-  public static void main(String[] args) {
-    int[] a = new int[]{2,4,76,2,3,8,9,4,3,66,55,44,33};
-    new MergeSort().mergesort(a);
-    for (int n : a) {
-      System.out.print(n + " ");
-    }
-  }
-  
-  public void mergesort(int[] a) {
+  @Override
+  public void sort(int[] a) {
     mergesort(a, 0, a.length-1);
   }
   
@@ -23,7 +16,7 @@ public class MergeSort {
     }
   }
   
-  public void merge(int[] a, int p, int q, int r) {
+  private void merge(int[] a, int p, int q, int r) {
     int n1 = q - p + 1;
     int n2 = r - q;
     
