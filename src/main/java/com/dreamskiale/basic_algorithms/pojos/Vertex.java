@@ -3,7 +3,9 @@ package com.dreamskiale.basic_algorithms.pojos;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Vertex<T> {
+import com.dreamskiale.basic_algorithms.search.DiameterStrategy;
+
+public class Vertex<T>{
   
   private final List<Vertex<T>> adjacent = new LinkedList<>();
   private final T value;
@@ -20,9 +22,21 @@ public class Vertex<T> {
     return value;
   }
   
+  public int getDiameter(DiameterStrategy diameterStrategy) {
+    return diameterStrategy.getDiameter(this);
+  }
+  
+  public int getHeight() {
+    int height = 0;
+    for (Vertex<T> v : adjacent) {
+      height = Math.max(height, v.getHeight() + 1);
+    }
+    return height;
+  }
+  
   @Override
   public String toString() {
     return value.toString();
   }
-
+  
 }

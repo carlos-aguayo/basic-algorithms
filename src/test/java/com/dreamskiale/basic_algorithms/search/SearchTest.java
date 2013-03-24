@@ -15,8 +15,8 @@ import com.dreamskiale.basic_algorithms.search.GraphSearch;
 public class SearchTest {
 
   @Test
-  public void testBFS1() throws Exception {
-    Vertex<Integer> head = buildGraph1();
+  public void testBFS1() {
+    Vertex<Integer> head = buildGraph1().get(0);
     GraphSearch<Integer> bfs = new BreadthFirstSearch<>();
     
     Iterable<Vertex<Integer>> visited = bfs.search(head);
@@ -30,8 +30,8 @@ public class SearchTest {
   }
 
   @Test
-  public void testBFS2() throws Exception {
-    Vertex<Integer> head = buildGraph2();
+  public void testBFS2() {
+    Vertex<Integer> head = buildGraph2().get(0);
     GraphSearch<Integer> bfs = new BreadthFirstSearch<>();
     
     Iterable<Vertex<Integer>> visited = bfs.search(head);
@@ -45,8 +45,8 @@ public class SearchTest {
   }
 
   @Test
-  public void testDFS1() throws Exception {
-    Vertex<Integer> head = buildGraph1();
+  public void testDFS1() {
+    Vertex<Integer> head = buildGraph1().get(0);
     
     List<GraphSearch<Integer>> l = new ArrayList<>();
     l.add(new DepthFirstSearchRecursive<Integer>());
@@ -65,8 +65,8 @@ public class SearchTest {
   }
 
   @Test
-  public void testDFS2() throws Exception {
-    Vertex<Integer> head = buildGraph2();
+  public void testDFS2() {
+    Vertex<Integer> head = buildGraph2().get(0);
     
     List<GraphSearch<Integer>> l = new ArrayList<>();
     l.add(new DepthFirstSearchRecursive<Integer>());
@@ -83,7 +83,37 @@ public class SearchTest {
       }
     }
   }
-
+  
+  @Test
+  public void testHeights() {
+    List<Vertex<Integer>> v = buildGraph1();
+    
+    int[] expectedHeights = new int[] {
+    // 0  1  2  3  4  5  6  7  8  9  10  11  
+       3, 2, 2, 0, 1, 0, 0, 1, 0, 0, 0,  0
+    };
+    
+    for (int i = 0; i < v.size(); i++) {
+      Assert.assertEquals(expectedHeights[i], v.get(i).getHeight());
+    }
+  }
+  
+  @Test
+  public void testDiameterWithHeight() {
+    DiameterStrategy[] strategies = new DiameterStrategy[]{
+//    new BFSDiameterStrategy(),
+      new HeightDiameterStrategy()
+    };
+    
+    for (DiameterStrategy s : strategies) {
+      Assert.assertEquals(7, buildGraph1().get(0).getDiameter(s));
+      Assert.assertEquals(9, buildGraph3().get(0).getDiameter(s));
+      Assert.assertEquals(9, buildGraph3().get(1).getDiameter(s));
+      Assert.assertEquals(5, buildGraph3().get(3).getDiameter(s));
+    }
+    
+  }
+  
   /**
    * Builds this tree:
    * 
@@ -101,7 +131,7 @@ public class SearchTest {
    * |     |                  |       |
    * 8     9                  10      11
    */
-  private Vertex<Integer> buildGraph1() {
+  private List<Vertex<Integer>> buildGraph1() {
     List<Vertex<Integer>> v = new ArrayList<>();
     int n = 12;
     for (int i = 0; i < n; i++) {
@@ -114,7 +144,7 @@ public class SearchTest {
     setAdjacent(v, 4, 8, 9);
     setAdjacent(v, 7, 10, 11);
 
-    return v.get(0);
+    return v;
   }
 
   /**
@@ -129,7 +159,7 @@ public class SearchTest {
    *  5 ----4 ----3
    *  
    */
-  private Vertex<Integer> buildGraph2() {
+  private List<Vertex<Integer>> buildGraph2() {
     List<Vertex<Integer>> v = new ArrayList<>();
     int n = 7;
     for (int i = 0; i < n; i++) {
@@ -144,7 +174,52 @@ public class SearchTest {
     setAdjacent(v, 5, 0, 4);
     setAdjacent(v, 6, 1, 3, 4);
 
-    return v.get(0);
+    return v;
+  }
+  
+  /**
+   * Builds this tree:
+   * 
+   *                                  0
+   *                                  |
+   *                  |----------------------------|
+   *                  |                            |
+   *                  1                            2
+   *                  |                            |
+   *     |------------------------|                |
+   *     |                        |                |
+   *     3                        4                5
+   *     |                        |        
+   * |--------|                   |       
+   * |        |                   8       
+   * 6        7               |-------|           
+   *          |               |       |
+   *          |               |       |
+   *          9               10      11
+   *          |                       |
+   *      |-------|                   |
+   *      |       |                   |
+   *      12      13                  14
+   */
+  private List<Vertex<Integer>> buildGraph3() {
+    List<Vertex<Integer>> v = new ArrayList<>();
+    int n = 15;
+    for (int i = 0; i < n; i++) {
+      v.add(new Vertex<Integer>(i));
+    }
+
+    setAdjacent(v, 0, 1, 2);
+    setAdjacent(v, 1, 3, 4);
+    setAdjacent(v, 2, 5);
+    setAdjacent(v, 3, 6, 7);
+    setAdjacent(v, 4, 8);
+    setAdjacent(v, 7, 9);
+    setAdjacent(v, 8, 10, 11);
+    setAdjacent(v, 9, 12, 13);
+    setAdjacent(v, 11, 14);
+
+    return v;
+    
   }
 
   private void setAdjacent(List<Vertex<Integer>> v, int head, int... adjacent) {
