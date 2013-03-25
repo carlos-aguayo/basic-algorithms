@@ -1,6 +1,7 @@
 package com.dreamskiale.basic_algorithms.search;
 
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 
 import org.junit.Assert;
@@ -124,6 +125,20 @@ public class SearchTest {
       Assert.assertEquals(9, buildGraph3().get(0).getDiameter(s));
       Assert.assertEquals(9, buildGraph3().get(1).getDiameter(s));
       Assert.assertEquals(9, buildGraph3().get(3).getDiameter(s));
+    }
+  }
+  
+  @Test
+  public void testTopologicalSort() {
+    DepthFirstSearchRecursive<Integer> dfs = new DepthFirstSearchRecursive<>();
+    dfs.dfs(buildGraph4());
+    
+    Deque<Vertex<Integer>> list = dfs.getTopologicalSort();
+    
+    int[] expected = new int[] {5, 7, 8, 4, 1, 2, 6, 0, 3};
+    int i = 0;
+    for (Vertex<Integer> v : list) {
+      Assert.assertEquals(expected[i++], v.getValue().intValue());
     }
   }
 
@@ -296,7 +311,6 @@ public class SearchTest {
     setAdjacent(v, 11, 14);
 
     return v;
-    
   }
 
   /**
@@ -347,7 +361,44 @@ public class SearchTest {
     setAdjacent(v, 14, 11);
 
     return v;
-    
+  }
+
+  /**
+   * Builds this directed graph:
+   * 
+  *  
+  *     1                    0       
+  *     |                    |
+  *     |                    |
+  *     *                    *
+  *     2 ------------------*3      4
+  *     |
+  *     |
+  *     *
+  *     6 * ------- 5
+  *                 |
+  *                 |
+  *                 *
+  *                 7
+  *                 |
+  *                 |
+  *                 *
+  *                 8
+   */
+  private List<Vertex<Integer>> buildGraph4() {
+    List<Vertex<Integer>> v = new ArrayList<>();
+    int n = 9;
+    for (int i = 0; i < n; i++) {
+      v.add(new Vertex<Integer>(i));
+    }
+
+    setAdjacent(v, 0, 3);
+    setAdjacent(v, 1, 2);
+    setAdjacent(v, 2, 3, 6);
+    setAdjacent(v, 5, 6, 7);
+    setAdjacent(v, 7, 8);
+
+    return v;
   }
 
   private void setAdjacent(List<Vertex<Integer>> v, int head, int... adjacent) {
