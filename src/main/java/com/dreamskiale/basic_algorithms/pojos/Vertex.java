@@ -8,14 +8,26 @@ import com.dreamskiale.basic_algorithms.search.DiameterStrategy;
 public class Vertex<T>{
   
   private final List<Vertex<T>> adjacent = new LinkedList<>();
+  private final List<Vertex<T>> incoming = new LinkedList<>();
   private final T value;
 
   public Vertex(T value) {
     this.value = value;
   }
   
+  /**
+   * If undirected graph, list of adjacent vertices.
+   * If directed graph, list of outgoing vertices.
+   */
   public List<Vertex<T>> getAdjacent() {
     return adjacent;
+  }
+  
+  /**
+   * In directed graph, this are the vertices that point to this vertex.
+   */
+  public List<Vertex<T>> getIncoming() {
+    return incoming;
   }
 
   public T getValue() {

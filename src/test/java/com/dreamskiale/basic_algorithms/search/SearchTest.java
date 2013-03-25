@@ -129,17 +129,30 @@ public class SearchTest {
   }
   
   @Test
-  public void testTopologicalSort() {
+  public void testTopologicalSort_DFS() {
     DepthFirstSearchRecursive<Integer> dfs = new DepthFirstSearchRecursive<>();
     dfs.dfs(buildGraph4());
     
-    Deque<Vertex<Integer>> list = dfs.getTopologicalSort();
+    Deque<Vertex<Integer>> topologicalSort = dfs.getTopologicalSort();
     
     int[] expected = new int[] {5, 7, 8, 4, 1, 2, 6, 0, 3};
     int i = 0;
-    for (Vertex<Integer> v : list) {
+    for (Vertex<Integer> v : topologicalSort) {
       Assert.assertEquals(expected[i++], v.getValue().intValue());
     }
+  }
+  
+  @Test
+  public void testTopologicalSort_Kahn() {
+    KahnTopologicalSort<Integer> kahn = new KahnTopologicalSort<>();
+    Deque<Vertex<Integer>> topologicalSort = kahn.getTopologicalSort(buildGraph4());
+    
+    int[] expected = new int[] {0, 1, 4, 5, 2, 7, 3, 6, 8};
+    int i = 0;
+    for (Vertex<Integer> v : topologicalSort) {
+      Assert.assertEquals(expected[i++], v.getValue().intValue());
+    }
+    
   }
 
   /**
@@ -392,21 +405,28 @@ public class SearchTest {
       v.add(new Vertex<Integer>(i));
     }
 
-    setAdjacent(v, 0, 3);
-    setAdjacent(v, 1, 2);
-    setAdjacent(v, 2, 3, 6);
-    setAdjacent(v, 5, 6, 7);
-    setAdjacent(v, 7, 8);
+    setPointingTo(v, 0, 3);
+    setPointingTo(v, 1, 2);
+    setPointingTo(v, 2, 3, 6);
+    setPointingTo(v, 5, 6, 7);
+    setPointingTo(v, 7, 8);
 
     return v;
   }
 
   private void setAdjacent(List<Vertex<Integer>> v, int head, int... adjacent) {
-    List<Vertex<Integer>> adj;
-
-    adj = v.get(head).getAdjacent();
+    List<Vertex<Integer>> adj = v.get(head).getAdjacent();
     for (int i : adjacent) {
       adj.add(v.get(i));
+    }
+  }
+
+  private void setPointingTo(List<Vertex<Integer>> v, int head, int... adjacent) {
+    List<Vertex<Integer>> adj = v.get(head).getAdjacent();
+    for (int i : adjacent) {
+      adj.add(v.get(i));
+      
+      v.get(i).getIncoming().add(v.get(head));
     }
   }
 
