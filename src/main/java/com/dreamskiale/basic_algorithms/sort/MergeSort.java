@@ -2,9 +2,14 @@ package com.dreamskiale.basic_algorithms.sort;
 
 public class MergeSort implements Sort {
 
+  /**
+   * Sort each pair of elements. Then, sort every four elements by merging every two pairs.
+   * Then, sort every 8 elements, etc. O(n log n) expected and worst case.
+   */
   @Override
-  public void sort(int[] a) {
+  public int[] sort(int[] a) {
     mergesort(a, 0, a.length-1);
+    return a;
   }
   
   private void mergesort(int[] a, int p, int r) {
