@@ -10,21 +10,24 @@ public class ShortestPathDAG<T> {
 
   private Map<Vertex<T>, Integer> distanceTo = new HashMap<>();
   
-  public int search(List<Vertex<T>> graph, Vertex<T> start, Vertex<T> finish) {
+  /**
+   * Returns the shortest distance from start to finish in the directed graph.
+   */
+  public int search(List<Vertex<T>> dag, Vertex<T> start, Vertex<T> finish) {
     distanceTo.clear();
     distanceTo.put(start, 0);
     
-    int minDistance = search0(graph, finish);
+    int minDistance = search0(dag, finish);
     
     return minDistance;
   }
 
-  private int search0(List<Vertex<T>> graph, Vertex<T> vertex) {
+  private int search0(List<Vertex<T>> dag, Vertex<T> vertex) {
     if (!distanceTo.containsKey(vertex)) {
       int minDistanceToVertex = Integer.MAX_VALUE;
       // The shortest path will be the distance to one of the parents plus one.
       for (Vertex<T> parent : vertex.getIncoming()) {
-        minDistanceToVertex = Math.min(minDistanceToVertex, search0(graph, parent) + 1);
+        minDistanceToVertex = Math.min(minDistanceToVertex, search0(dag, parent) + 1);
       }
       distanceTo.put(vertex, minDistanceToVertex);
     }
