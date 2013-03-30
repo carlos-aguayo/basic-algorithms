@@ -13,7 +13,8 @@ public class CutRod {
    * @return
    */
   public int findBestRevenueRecursive(int size, int[] prices) {
-    maxRevenues = new int[size];
+    maxRevenues = new int[size+1];
+    maxRevenues[0] = 0;
     return findBestRevenueRecursive0(size, prices);
   }
 
@@ -30,7 +31,7 @@ public class CutRod {
     if (maxRevenues[size] == 0) {
       int max = 0;
       for (int i = 1; i <= size; i++) {
-        max = Math.max(max, prices[i] + findBestRevenueRecursive0(i-size, prices));
+        max = Math.max(max, prices[i] + findBestRevenueRecursive0(Math.abs(i-size), prices));
       }
       maxRevenues[size] = max;
     }
