@@ -14,7 +14,7 @@ public class CutRodTest {
     // and for a rod of size 2, we get $5
     int[] pricePerRodSize = new int[]   {0, 1, 5, 8, 9, 10, 17, 17, 20, 24, 30};
     
-    assertEquals(10, new CutRod().findBestRevenueRecursive(4, pricePerRodSize));
+    assertEquals(10, new CutRod().findBestRevenueTopDown(4, pricePerRodSize));
   }
 
   @Test
@@ -28,7 +28,7 @@ public class CutRodTest {
     int[] expectedMaxRevenue = new int[]{0, 1, 5, 8, 10, 13, 17, 18, 22, 25, 30};
     
     for(int i = 1; i < expectedMaxRevenue.length; i++) {
-      Assert.assertEquals("Failed for rod of size " + i, expectedMaxRevenue[i], new CutRod().findBestRevenueRecursive(i, pricePerRodSize));
+      Assert.assertEquals("Failed for rod of size " + i, expectedMaxRevenue[i], new CutRod().findBestRevenueTopDown(i, pricePerRodSize));
     }
   }
   

@@ -5,10 +5,10 @@ public class MinimumNumberOfCoins {
   
   private Integer[] minNumberOfCoins;
   
-  public int findRecursive(int sum, int[] coinValues) {
+  public int findTopDown(int sum, int[] coinValues) {
     minNumberOfCoins = new Integer[sum+1];
     minNumberOfCoins[0] = 0;
-    return findRecursive0(sum, coinValues);
+    return findTopDown0(sum, coinValues);
   }
   
   /**
@@ -25,12 +25,12 @@ public class MinimumNumberOfCoins {
    * One 25c coin, plus the best solution for 38 cents
    * 
    */
-  private Integer findRecursive0(int sum, int[] coinValues) {
+  private Integer findTopDown0(int sum, int[] coinValues) {
     if (sum < 0) { return null; }
     if (minNumberOfCoins[sum] == null) {
       int min = Integer.MAX_VALUE;
       for (int i = 0; i < coinValues.length; i++) {
-        Integer remainder = findRecursive0(sum-coinValues[i], coinValues);
+        Integer remainder = findTopDown0(sum-coinValues[i], coinValues);
         if (remainder != null) {
           min = Math.min(min, 1 + remainder);
         }
@@ -40,7 +40,7 @@ public class MinimumNumberOfCoins {
     return minNumberOfCoins[sum];
   }
   
-  public int findIterative(int sum, int[] coinValues) {
+  public int findBottomUp(int sum, int[] coinValues) {
     int[] min = new int[sum+1];
     min[0] = 0;
     for (int i = 1; i < min.length; i++) {

@@ -10,8 +10,8 @@ public class MinimumNumberOfCoinsTest {
   
   @Test
   public void testSimple() {
-    Assert.assertEquals(3, new MinimumNumberOfCoins().findIterative(63, new int[]{1, 5, 10, 21, 25}));
-    Assert.assertEquals(3, new MinimumNumberOfCoins().findRecursive(63, new int[]{1, 5, 10, 21, 25}));
+    Assert.assertEquals(3, new MinimumNumberOfCoins().findBottomUp(63, new int[]{1, 5, 10, 21, 25}));
+    Assert.assertEquals(3, new MinimumNumberOfCoins().findTopDown(63, new int[]{1, 5, 10, 21, 25}));
   }
   
   @Test
@@ -20,8 +20,8 @@ public class MinimumNumberOfCoinsTest {
     int[] expectedMinNumberOfCoins = new int[]{0, 1, 2, 1, 2, 1, 2, 3, 2, 3, 2, 3};
     
     for (int i = 1; i < expectedMinNumberOfCoins.length; i++) {
-      assertEquals("Failed for " + i, expectedMinNumberOfCoins[i], new MinimumNumberOfCoins().findIterative(i, coinValues));
-      assertEquals("Failed for " + i, expectedMinNumberOfCoins[i], new MinimumNumberOfCoins().findRecursive(i, coinValues));
+      assertEquals("Failed for " + i, expectedMinNumberOfCoins[i], new MinimumNumberOfCoins().findBottomUp(i, coinValues));
+      assertEquals("Failed for " + i, expectedMinNumberOfCoins[i], new MinimumNumberOfCoins().findTopDown(i, coinValues));
     }
   }
 

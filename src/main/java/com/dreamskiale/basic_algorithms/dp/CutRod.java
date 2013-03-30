@@ -12,10 +12,10 @@ public class CutRod {
    * @param prices
    * @return
    */
-  public int findBestRevenueRecursive(int size, int[] prices) {
+  public int findBestRevenueTopDown(int size, int[] prices) {
     maxRevenues = new int[size+1];
     maxRevenues[0] = 0;
-    return findBestRevenueRecursive0(size, prices);
+    return findBestRevenueTopDown0(size, prices);
   }
 
   /**
@@ -27,11 +27,11 @@ public class CutRod {
    * The price of a rod of size 1 plus the best revenue for a rod of size 3.
    * 
    */
-  private int findBestRevenueRecursive0(int size, int[] prices) {
+  private int findBestRevenueTopDown0(int size, int[] prices) {
     if (maxRevenues[size] == 0) {
       int max = 0;
       for (int i = 1; i <= size; i++) {
-        max = Math.max(max, prices[i] + findBestRevenueRecursive0(Math.abs(i-size), prices));
+        max = Math.max(max, prices[i] + findBestRevenueTopDown0(Math.abs(i-size), prices));
       }
       maxRevenues[size] = max;
     }
