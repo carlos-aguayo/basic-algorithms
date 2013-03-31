@@ -7,6 +7,20 @@ public class Knapsack {
   private int[] weight;
   private int[] value;
 
+  /**
+   * During a robbery, a burglar finds much more loot than he had expected and 
+   * has to decide what to take. His bag (or “knapsack”) will hold a total weight 
+   * of at most W pounds. There are n items to pick from, of weight w1, . . . , wn and 
+   * dollar value v1, . . . , vn. What’s the most valuable combination of items he can 
+   * fit into his bag?
+   * 
+   * https://docs.google.com/spreadsheet/ccc?key=0AuHKpmIAZCN9dDF5RWdlNVd2MDBrR3ZVckVqMklRTmc#gid=0
+   * 
+   * @param weight
+   * @param value
+   * @param maxWeight
+   * @return
+   */
   public int findMaxRevenue(int[] weight, int[] value, int maxWeight) {
     this.weight = weight;
     this.value = value;
