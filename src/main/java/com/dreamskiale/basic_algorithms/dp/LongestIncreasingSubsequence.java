@@ -8,6 +8,17 @@ public class LongestIncreasingSubsequence {
     return longest(input, input.length() - 1, longest);
   }
 
+  /**
+   * Algorithms - S. Dasgupta
+   * Page 170
+   * 
+   * 
+   * 
+   * @param input
+   * @param i
+   * @param longest
+   * @return
+   */
   private int longest(String input, int i, int[] longest) {
     if (longest[i] == 0) {
       int max = 0;

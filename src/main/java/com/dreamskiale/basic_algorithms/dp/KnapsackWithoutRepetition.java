@@ -52,9 +52,12 @@ public class KnapsackWithoutRepetition implements Knapsack {
     }
     if (maxRevenue[maxWeight][n] == null) {
       int max = 0;
+      // Path #1 - Not including the current item
       max = Math.max(max, maxRevenue0(maxWeight, n-1));
-      int v = weight[n] <= maxWeight ? value[n] : 0;
-      max = Math.max(max, maxRevenue0(maxWeight - weight[n], n-1) + v);
+      if (weight[n] <= maxWeight) {
+        // Path #2 - Including the current item, but only if the weight of the item is less than maxWeight
+        max = Math.max(max, value[n] + maxRevenue0(maxWeight - weight[n], n-1));
+      }
       maxRevenue[maxWeight][n] = max;
     }
     return maxRevenue[maxWeight][n];

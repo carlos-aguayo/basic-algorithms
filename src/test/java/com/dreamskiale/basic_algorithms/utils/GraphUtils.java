@@ -3,6 +3,7 @@ package com.dreamskiale.basic_algorithms.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.dreamskiale.basic_algorithms.pojos.UndirectedWeightedGraph;
 import com.dreamskiale.basic_algorithms.pojos.Vertex;
 
 public class GraphUtils {
@@ -298,6 +299,113 @@ public class GraphUtils {
     setPointingTo(v, 4, 5);
 
     return v;
+  }
+  
+  /**
+   * Builds this graph:
+   * 
+   * A      1       C      3       E
+   *
+   *     
+   * 2              2              1
+   *   
+   *  
+   * B      1       D      4       F
+   * 
+   * B is connected to C with weight 2
+   * D is connected to E with weight 3
+   * 
+   */
+  public static UndirectedWeightedGraph<String> buildGraph6() {
+    List<String> nodes = new ArrayList<>();
+    nodes.add("A");
+    nodes.add("B");
+    nodes.add("C");
+    nodes.add("D");
+    nodes.add("E");
+    nodes.add("F");
+    UndirectedWeightedGraph<String> graph = new UndirectedWeightedGraph<>(nodes);
+
+    graph.setEdge("A", "B", 2);
+    graph.setEdge("A", "C", 1);
+
+    graph.setEdge("B", "A", 2);
+    graph.setEdge("B", "C", 2);
+    graph.setEdge("B", "D", 1);
+
+    graph.setEdge("C", "A", 1);
+    graph.setEdge("C", "B", 2);
+    graph.setEdge("C", "D", 2);
+    graph.setEdge("C", "E", 3);
+
+    graph.setEdge("D", "B", 1);
+    graph.setEdge("D", "C", 2);
+    graph.setEdge("D", "E", 3);
+    graph.setEdge("D", "F", 4);
+
+    graph.setEdge("E", "C", 3);
+    graph.setEdge("E", "D", 3);
+    graph.setEdge("E", "F", 1);
+
+    graph.setEdge("F", "E", 1);
+    graph.setEdge("F", "D", 4);
+
+    return graph;
+  }
+
+  /**
+   * Builds this graph:
+   * 
+   * A      6       C      5       E
+   *
+   *     
+   * 5              2              4
+   *   
+   *  
+   * B      2       D      4       F
+   * 
+   * A is connected to D with weight 4
+   * B is connected to C with weight 1
+   * C is connected to F with weight 3
+   * 
+   */
+  public static UndirectedWeightedGraph<String> buildGraph7() {
+    List<String> nodes = new ArrayList<>();
+    nodes.add("A");
+    nodes.add("B");
+    nodes.add("C");
+    nodes.add("D");
+    nodes.add("E");
+    nodes.add("F");
+    UndirectedWeightedGraph<String> graph = new UndirectedWeightedGraph<>(nodes);
+
+    graph.setEdge("A", "B", 5);
+    graph.setEdge("A", "C", 6);
+    graph.setEdge("A", "D", 4);
+
+    graph.setEdge("B", "A", 5);
+    graph.setEdge("B", "C", 1);
+    graph.setEdge("B", "D", 2);
+
+    graph.setEdge("C", "A", 6);
+    graph.setEdge("C", "B", 1);
+    graph.setEdge("C", "D", 2);
+    graph.setEdge("C", "E", 5);
+    graph.setEdge("C", "F", 3);
+
+    graph.setEdge("D", "A", 4);
+    graph.setEdge("D", "B", 2);
+    graph.setEdge("D", "C", 2);
+    graph.setEdge("D", "F", 4);
+
+    graph.setEdge("E", "C", 5);
+    graph.setEdge("E", "F", 4);
+
+    graph.setEdge("F", "C", 3);
+    graph.setEdge("F", "D", 4);
+    graph.setEdge("F", "E", 4);
+
+    return graph;
   }
 
   private static <T> void setAdjacent(List<Vertex<T>> v, int head, int... adjacent) {

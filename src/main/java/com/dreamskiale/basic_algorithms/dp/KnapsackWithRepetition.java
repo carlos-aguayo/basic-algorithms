@@ -38,8 +38,10 @@ public class KnapsackWithRepetition implements Knapsack {
     if (maxRevenue[maxWeight] == null) {
       int max = 0;
       for (int i = 0; i < value.length; i++) {
-        int v = weight[i] <= maxWeight ? value[i] : 0;
-        max = Math.max(max, v + maxRevenue0(maxWeight - weight[i]));
+        if (weight[i] <= maxWeight) {
+          // One path per any incoming element
+          max = Math.max(max, value[i] + maxRevenue0(maxWeight - weight[i]));
+        }
       }
       maxRevenue[maxWeight] = max;
     }
